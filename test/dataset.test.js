@@ -128,6 +128,61 @@ describe('Dataset', () => {
     expect(e.equals(d)).toBe(false)
   })
 
+  describe('every', () => {
+    const quad1 = rdf.quad(
+      rdf.namedNode('http://example.org/subject'),
+      rdf.namedNode('http://example.org/predicate'),
+      rdf.literal('a')
+    )
+
+    const quad2 = rdf.quad(
+      rdf.namedNode('http://example.org/subject'),
+      rdf.namedNode('http://example.org/predicate'),
+      rdf.literal('b')
+    )
+
+    const quad3 = rdf.quad(
+      rdf.namedNode('http://example.org/subject'),
+      rdf.namedNode('http://example.org/predicate'),
+      rdf.literal('c')
+    )
+    const ds = rdf.dataset([quad1, quad2, quad3])
+
+    test('should get quad and dataset', () => {
+      ds.every((quad, dataset) => {
+        expect(quad instanceof rdf.quad().constructor).toBe(true)
+        expect(dataset instanceof rdf.dataset().constructor).toBe(true)
+      })
+    })
+
+    describe('with a callback always returning true', () => {
+      test('should return true', () => {
+        expect(ds.every((_quad, _dataset) => true)).toBe(true)
+      })
+    })
+    describe('with a callback always returning false', () => {
+      test('should return false', () => {
+        expect(ds.every((_quad, _dataset) => false)).toBe(false)
+      })
+    })
+    test('bails out', () => {
+      let testsCompleted = 0
+      ds.every((quad) => {
+        testsCompleted++
+        return quad.object.value === 'a'
+      })
+      expect(testsCompleted).toBe(2)
+    })
+    test('iterates over all quads until success', () => {
+      let testsCompleted = 0
+      ds.every((quad) => {
+        testsCompleted++
+        return true
+      })
+      expect(testsCompleted).toBe(ds.size)
+    })
+  })
+
   test('.filter should return a new dataset that contains all quads that pass the filter test', () => {
     const quad1 = rdf.quad(
       rdf.namedNode('http://example.org/subject'),

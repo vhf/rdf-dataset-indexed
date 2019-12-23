@@ -45,6 +45,15 @@ class Dataset extends DatasetCore {
     return union.size === this.size
   }
 
+  every (iteratee) {
+    for (const quad of this) {
+      if (!iteratee(quad, this)) {
+        return false
+      }
+    }
+    return true
+  }
+
   filter (iteratee) {
     const filteredQuads = this.toArray().filter((quad) => iteratee(quad, this))
     return new this.constructor(filteredQuads)
