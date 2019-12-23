@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.0
+
+* Add all methods warranted by the RDFJS Dataset Specification
+* Expose a [`DatasetFactory`](https://rdf.js.org/dataset-spec/#datasetfactory-interface) object
+* Provide TypeScript definition
+
 ## 0.4.0
 
 * Add method aliases for RDF/JS DatasetCore compatibility
