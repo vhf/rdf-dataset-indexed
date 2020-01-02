@@ -1,5 +1,5 @@
-import { BaseQuad, DataFactory, Dataset, Quad } from 'rdf-js';
+import * as RDF from 'rdf-js';
 
-declare function dataFactory<Q extends BaseQuad = Quad>(quads?: Array<Q>): DataFactory & DatasetFactory<Q>;
+export * from '@rdfjs/data-model';
 
-export default dataFactory;
+export function dataset<Q extends RDF.BaseQuad = RDF.Quad>(quads?: RDF.Dataset<Q> | Q[]): RDF.Dataset<Q>;
