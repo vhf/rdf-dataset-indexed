@@ -12,11 +12,14 @@
   ],
   "license": "MIT",
   "main": "./index.js",
+  "types": "./index.d.ts",
   "engines": {
-    "node": ">=6.0"
+    "node": ">=8.0"
   },
   "files": [
-    "dataset.js",
+    "Dataset.js",
+    "DatasetCore.js",
+    "index.d.ts",
     "index.js",
     "lib"
   ],
